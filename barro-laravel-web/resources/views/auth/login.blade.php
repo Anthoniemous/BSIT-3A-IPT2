@@ -71,7 +71,7 @@
                 {{ __("Don't have an account?") }}
                 <a href="{{ route('register') }}" 
                    class="text-orange-500 hover:text-orange-600 font-medium transition">
-                    {{ __('Sign up') }}
+                    {{ __('Sign up ') }}
                 </a>
             </div>
         </div>
