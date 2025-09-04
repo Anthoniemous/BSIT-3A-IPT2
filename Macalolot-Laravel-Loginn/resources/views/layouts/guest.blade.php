@@ -15,16 +15,18 @@
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
     <body class="font-sans text-gray-900 antialiased">
-        <div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-gray-100">
-            <div>
-                <a href="/">
-                    <x-application-logo class="w-20 h-20 fill-current text-gray-500" />
-                </a>
-            </div>
+       <div style="min-height:100vh; display:flex; flex-direction:column; justify-content:center; align-items:center; padding-top:1.5rem; background:linear-gradient(to bottom right, orange, black);">
+    <div>
+    <a href="/">
+        <img src="/build/assets/logolaravel.png" alt="Logo" style="width:10rem; height:10rem;">
+    </a>
+</div>
 
-            <div class="w-full sm:max-w-md mt-6 px-6 py-4 bg-white shadow-md overflow-hidden sm:rounded-lg">
-                {{ $slot }}
-            </div>
-        </div>
+
+    <div style="width:100%; max-width:28rem; margin-top:1.5rem; padding:1.5rem; background:rgba(0,0,0,0.7); box-shadow:0 4px 6px rgba(0,0,0,0.1); border-radius:0.5rem; color:black;">
+        {{ $slot }}
+    </div>
+</div>
+
     </body>
 </html>
