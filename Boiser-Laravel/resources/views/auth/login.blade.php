@@ -1,6 +1,5 @@
 <x-guest-layout>
     <!-- Session Status -->
-
     <x-auth-session-status class="mb-4" :status="session('status')" />
 
     <form method="POST" action="{{ route('login') }}">
@@ -55,4 +54,20 @@
             </div>
         </div>
     </form>
+
+    <!-- Divider -->
+    <div class="flex items-center my-6">
+        <div class="flex-grow border-t border-gray-300 dark:border-gray-700"></div>
+        <span class="mx-2 text-gray-500 text-sm">{{ __('or') }}</span>
+        <div class="flex-grow border-t border-gray-300 dark:border-gray-700"></div>
+    </div>
+
+    <!-- Continue with Google -->
+    <div class="flex justify-center">
+        <a href="{{ route('google-auth') }}"
+           class="flex items-center px-4 py-2 border border-gray-300 dark:border-gray-700 rounded-md shadow-sm bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 transition">
+            <img src="https://www.svgrepo.com/show/355037/google.svg" alt="Google" class="w-5 h-5 mr-2">
+            {{ __('Continue with Google') }}
+        </a>
+    </div>
 </x-guest-layout>
