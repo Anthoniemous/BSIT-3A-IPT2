@@ -54,6 +54,23 @@
                     </x-primary-button>
                 </div>
             </form>
+
+                 <!-- Divider -->
+<div class="flex items-center my-6">
+    <hr class="flex-grow border-gray-300">
+    <span class="px-3 text-gray-500 text-sm">or</span>
+    <hr class="flex-grow border-gray-300">
+</div>
+
+                    <!-- Continue with Google -->
+<a href="{{ route('google-auth') }}"
+   class="flex items-center justify-center w-full py-2.5 bg-white border border-gray-300 rounded-lg shadow hover:shadow-md transition duration-200">
+    <img src="https://www.svgrepo.com/show/355037/google.svg" 
+         alt="Google" 
+         class="w-5 h-5 mr-2">
+    <span class="text-gray-700 text-sm font-medium">Continue with Google</span>
+</a>
+
         </div>
     </div>
 </x-guest-layout>
