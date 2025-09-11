@@ -32,6 +32,7 @@
             </label>
         </div>
 
+        <!-- Login + Forgot Password -->
         <div class="flex items-center justify-end mt-4">
             @if (Route::has('password.request'))
                 <a class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800" href="{{ route('password.request') }}">
@@ -44,4 +45,14 @@
             </x-primary-button>
         </div>
     </form>
+
+    <!-- Continue with Google -->
+    <div class="flex justify-center mt-6">
+        <a href="{{ route('google-auth') }}"
+           class="flex items-center px-4 py-2 bg-white border border-gray-300 rounded-lg shadow-sm hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+            <img src="https://www.svgrepo.com/show/475656/google-color.svg"
+                 alt="Google" class="w-5 h-5 mr-2">
+            <span class="text-gray-700 text-sm font-medium">Continue with Google</span>
+        </a>
+    </div>
 </x-guest-layout>
