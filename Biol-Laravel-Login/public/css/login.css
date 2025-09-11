@@ -57,7 +57,7 @@ body.login-body {
     margin-bottom: 0.4rem;
     color: #333;
 }
-.form-group input[type="text"],
+
 .form-group input[type="email"],
 .form-group input[type="password"] {
     width: 90%;                
