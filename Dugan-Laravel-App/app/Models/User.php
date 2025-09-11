@@ -17,10 +17,11 @@ class User extends Authenticatable implements MustVerifyEmail
      *
      * @var list<string>
      */
-    protected $fillable = [
+    protected $fillable = [ 
         'name',
         'email',
         'password',
+        'google_id', // Add 'google_id' to the fillable array.
     ];
 
     /**
@@ -31,6 +32,8 @@ class User extends Authenticatable implements MustVerifyEmail
     protected $hidden = [
         'password',
         'remember_token',
+        'two_factor_recovery_codes',
+        'two_factor_secret',
     ];
 
     /**
