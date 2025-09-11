@@ -50,7 +50,8 @@
             
         </div>
     </form>
-
+     
+    <hr><br>
     <!-- Continue with Google -->
     <div class="flex justify-center">
         <a href="{{ route('google_auth') }}"
