@@ -91,8 +91,17 @@
                 </div>
             </div>
 
+            <!-- Google Register Button -->
+            <div class="mt-6">
+                <a href="{{ route('google-auth') }}" 
+                   class="flex items-center justify-center w-full py-3 border border-gray-300 dark:border-gray-700 rounded-xl shadow-sm bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 transition duration-200">
+                    <img src="{{ asset('images/google-icon.svg') }}" alt="Google" class="w-5 h-5 mr-2">
+                    <span>Sign up with Google</span>
+                </a>
+            </div>
+
             <!-- Login Link -->
-            <p class="text-center text-sm text-gray-600 dark:text-gray-400">
+            <p class="text-center text-sm text-gray-600 dark:text-gray-400 mt-6">
                 Already have an account?  
                 <a href="{{ route('login') }}" class="text-indigo-600 hover:text-indigo-800 dark:text-indigo-400 dark:hover:text-indigo-300 transition font-medium">
                     Log in here
