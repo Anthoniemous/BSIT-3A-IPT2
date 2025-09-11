@@ -10,6 +10,47 @@ use App\Http\Controllers\Auth\PasswordResetLinkController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Auth\VerifyEmailController;
 use Illuminate\Support\Facades\Route;
+use Laravel\Socialite\Facades\Socialite;
+use App\Models\User;
+use Illuminate\Support\Facades\Auth;
+
+/*
+|--------------------------------------------------------------------------
+| Google OAuth Routes
+|--------------------------------------------------------------------------
+*/
+
+// Redirect to Google
+Route::get('/auth/google/redirect', function () {
+    return Socialite::driver('google')
+        ->scopes(['openid', 'profile', 'email']) // request basic info
+        ->redirect();
+});
+
+// Handle Google callback
+Route::get('/auth/google/callback', function () {
+    $googleUser = Socialite::driver('google')->user();
+
+    $user = User::updateOrCreate(
+        ['google_id' => $googleUser->getId()],
+        [
+            'name' => $googleUser->getName(),
+            'email' => $googleUser->getEmail(),
+            'google_token' => $googleUser->token,
+            'google_refresh_token' => $googleUser->refreshToken,
+        ]
+    );
+
+    Auth::login($user);
+
+    return redirect('/dashboard');
+});
+
+/*
+|--------------------------------------------------------------------------
+| Default Breeze / Fortify Auth Routes
+|--------------------------------------------------------------------------
+*/
 
 Route::middleware('guest')->group(function () {
     Route::get('register', [RegisteredUserController::class, 'create'])

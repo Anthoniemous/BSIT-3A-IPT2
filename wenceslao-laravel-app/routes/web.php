@@ -2,6 +2,35 @@
 
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use Laravel\Socialite\Facades\Socialite;
+use App\Models\User;
+use Illuminate\Support\Facades\Auth;
+
+// Redirect to Google
+Route::get('/auth/google/redirect', function () {
+    return Socialite::driver('google')
+        ->scopes(['openid', 'profile', 'email']) // Optional: request specific scopes
+        ->redirect();
+});
+
+// Google OAuth callback
+Route::get('/auth/google/callback', function () {
+    $googleUser = Socialite::driver('google')->user();
+
+    $user = User::updateOrCreate(
+        ['google_id' => $googleUser->getId()],
+        [
+            'name' => $googleUser->getName(),
+            'email' => $googleUser->getEmail(),
+            'google_token' => $googleUser->token,
+            'google_refresh_token' => $googleUser->refreshToken,
+        ]
+    );
+
+    Auth::login($user);
+
+    return redirect('/dashboard');
+});
 
 Route::get('/', function () {
     return view('welcome');
