@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Auth\GoogleController;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,4 +29,8 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+Route::get("auth/google", [GoogleController::class, "redirectToGoogle"])->name("redirect.google");
+Route::get("auth/google/callback", [GoogleController::class, "handleGoogleCallback"]);
+
 require __DIR__.'/auth.php';
+
