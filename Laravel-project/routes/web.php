@@ -8,7 +8,7 @@ use Laravel\Socialite\Facades\Socialite;
  
 Route::get('/auth/redirect', function () {
     return Socialite::driver('google')->redirect();
-});
+})->name('google-auth');
 
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
