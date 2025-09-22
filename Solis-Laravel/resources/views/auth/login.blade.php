@@ -5,7 +5,7 @@
             <!-- Logo -->
             <div class="text-center">
                 <a href="/">
-                    <img class="mx-auto h-16 w-auto" src="{{ asset('images/logo.png') }}" alt="Logo">
+                    <img class="mx-auto h-40 w-40 mb-[-50px]" src="{{ asset('img/logogo.png') }}"  alt="Logo">
                 </a>
                 <h2 class="mt-6 text-3xl font-extrabold text-gray-900">Sign in to your account</h2>
                 <p class="mt-2 text-sm text-gray-600">
@@ -20,7 +20,7 @@
             <div class="bg-white p-6 rounded-lg shadow-md">
                 <a href="{{ route('google-auth') }}"
                    class="w-full inline-flex items-center justify-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 transition">
-                    <img src="{{ asset('images/google-logo.svg') }}" alt="Google" class="w-5 h-5 mr-2">
+                    <img src="{{ asset('img/google.png') }}" alt="Google" class="w-5 h-5 mr-2">
                     Continue with Google
                 </a>
             </div>
