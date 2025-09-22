@@ -13,7 +13,7 @@
                     <x-input-label for="name" :value="__('Name')" class="text-pink-400" />
                     <x-text-input 
                         id="name" 
-                        class="block mt-1 w-full rounded-lg bg-gray-800 text-white border border-gray-700 focus:border-babypink-500 focus:ring-pink-500" 
+                        class="block mt-1 w-full rounded-lg bg-gray-800 text-white border border-lightsgray-700 focus:border-babypink-500 focus:ring-pink-500" 
                         type="text" 
                         name="name" 
                         :value="old('name')" 
