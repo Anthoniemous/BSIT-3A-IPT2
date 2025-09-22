@@ -1,3 +1,27 @@
+<!-- Top Contact Bar -->
+<div class="bg-pink-600 text-white text-sm border-b border-pink-200">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center py-2">
+        <div class="flex gap-6">
+            <span>📞 (123) 456-7890</span>
+            <span>✉️ info@sweetdelights.com</span>
+        </div>
+        <div class="flex gap-4">
+            <a href="#" class="hover:text-pink-200">
+                <img width="20px" src="{{asset('/icons/facebook.png')}}" 
+                             alt="FB">
+            </a>
+            <a href="#" class="hover:text-pink-200">
+                <img width="20px" src="{{asset('/icons/instagram.png')}}" 
+                             alt="IG">
+            </a>
+            <a href="#" class="hover:text-pink-200">
+                <img width="20px" src="{{asset('/icons/twitter.png')}}" 
+                             alt="TW">
+            </a>
+        </div>
+    </div>
+</div>
+
 <nav x-data="{ open: false }" class="bg-white border-b border-gray-100">
     <!-- Primary Navigation Menu -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -6,14 +30,35 @@
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center">
                     <a href="{{ route('dashboard') }}">
-                        <x-application-logo class="block h-9 w-auto fill-current text-gray-800" />
+                        <x-application-logo class="block h-9 w-auto fill-current text-pink-600" />
                     </a>
                 </div>
 
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-                        {{ __('Dashboard') }}
+                        {{ __('Home') }}
+                    </x-nav-link>
+
+                    <!-- Placeholder links (no routes yet) -->
+                    <x-nav-link href="#">
+                        {{ __('Menu') }}
+                    </x-nav-link>
+
+                    <x-nav-link href="#">
+                        {{ __('Shop') }}
+                    </x-nav-link>
+
+                    <x-nav-link href="#">
+                        {{ __('Orders') }}
+                    </x-nav-link>
+
+                    <x-nav-link href="#">
+                        {{ __('About Us') }}
+                    </x-nav-link>
+
+                    <x-nav-link href="#">
+                        {{ __('Contact') }}
                     </x-nav-link>
                 </div>
             </div>
@@ -24,7 +69,6 @@
                     <x-slot name="trigger">
                         <button class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150">
                             <div>{{ Auth::user()->name }}</div>
-
                             <div class="ms-1">
                                 <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
                                     <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
@@ -41,7 +85,6 @@
                         <!-- Authentication -->
                         <form method="POST" action="{{ route('logout') }}">
                             @csrf
-
                             <x-dropdown-link :href="route('logout')"
                                     onclick="event.preventDefault();
                                                 this.closest('form').submit();">
@@ -70,6 +113,23 @@
             <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                 {{ __('Dashboard') }}
             </x-responsive-nav-link>
+
+            <!-- Placeholder links (mobile) -->
+            <x-responsive-nav-link href="#">
+                {{ __('Menu') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link href="#">
+                {{ __('Shop') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link href="#">
+                {{ __('Orders') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link href="#">
+                {{ __('About Us') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link href="#">
+                {{ __('Contact') }}
+            </x-responsive-nav-link>
         </div>
 
         <!-- Responsive Settings Options -->
@@ -87,7 +147,6 @@
                 <!-- Authentication -->
                 <form method="POST" action="{{ route('logout') }}">
                     @csrf
-
                     <x-responsive-nav-link :href="route('logout')"
                             onclick="event.preventDefault();
                                         this.closest('form').submit();">
