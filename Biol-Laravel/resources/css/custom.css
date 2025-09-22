@@ -1,0 +1,31 @@
+
+nav[x-data] {
+  background-color: #000 !important;           
+  color: #7CFC00 !important;                   
+  border-bottom-color: #064e3b !important;     
+}
+
+
+nav[x-data] a,
+nav[x-data] .inline-flex,
+nav[x-data] button {
+  color: #7CFC00 !important;
+  transition: color 0.18s ease;
+}
+
+/* hover states */
+nav[x-data] a:hover,
+nav[x-data] .inline-flex:hover,
+nav[x-data] button:hover {
+  color: #ffffff !important;
+}
+
+/* make active (border) indicators green (override Tailwind border classes if used) */
+nav[x-data] .border-b-2 {
+  border-bottom-color: #10b981 !important;
+}
+
+/* mobile menu background override (responsive menu inside nav) */
+nav[x-data] .sm\\:hidden {
+  background-color: #000 !important;
+}
