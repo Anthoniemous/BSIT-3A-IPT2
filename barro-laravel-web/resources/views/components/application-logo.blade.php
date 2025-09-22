@@ -1,1 +1,1 @@
-<img width="100" src="{{asset('/barro-logo/barrologo.jpeg')}}">
+<img width="100" src="{{asset('/barro-logo/logo-trans.png')}}">
