@@ -15,10 +15,10 @@
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
     <body class="font-sans text-gray-900 antialiased">
-       <div style="min-height:100vh; display:flex; flex-direction:column; justify-content:center; align-items:center; padding-top:1.5rem; background:linear-gradient(to bottom right, orange, black);">
+       <div style="min-height:100vh; display:flex; flex-direction:column; justify-content:center; align-items:center; padding-top:1.5rem; background: linear-gradient(90deg,rgba(28, 156, 156, 1) 0%, rgba(20, 110, 110, 1) 39%, rgba(10, 66, 66, 1) 99%);">
     <div>
     <a href="/">
-        <img src="/build/assets/logolaravel.png" alt="Logo" style="width:10rem; height:10rem;">
+        <img src="/build/assets/wlogo.png" alt="Logo" style="width:150px; height:150px;">
     </a>
 </div>
 
