@@ -6,7 +6,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            background: linear-gradient(to right, #a935f7ff, #b8ebffff);
+            background: linear-gradient(to bottom right, #ffe6f2, #fff);
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
@@ -14,18 +14,19 @@
         .login-box {
             background: #fff;
             padding: 2.5rem;
-            border-radius: 15px;
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+            border-radius: 20px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
             width: 100%;
             max-width: 420px;
             text-align: center;
+            border: 2px solid #f8c1e1;
         }
 
         /* Title */
         .login-title {
-            font-size: 1.8rem;
+            font-size: 2rem;
             font-weight: bold;
-            color: #fa00ddff;
+            color: #e75480; /* Jopay pink */
             margin-bottom: 1.5rem;
         }
 
@@ -38,22 +39,22 @@
         .custom-label {
             font-weight: 600;
             font-size: 0.95rem;
-            color: #333;
+            color: #444;
         }
 
         .custom-input {
             width: 100%;
             margin-top: 0.5rem;
             padding: 0.75rem 1rem;
-            border: 1px solid #ccc;
-            border-radius: 8px;
+            border: 1px solid #f3b7d0;
+            border-radius: 12px;
             font-size: 0.95rem;
             transition: 0.3s;
         }
 
         .custom-input:focus {
-            border-color: #4a3fdd;
-            box-shadow: 0 0 6px rgba(74, 63, 221, 0.3);
+            border-color: #e75480;
+            box-shadow: 0 0 6px rgba(231, 84, 128, 0.3);
             outline: none;
         }
 
@@ -85,21 +86,21 @@
         /* Forgot Password Link */
         .forgot-link {
             font-size: 0.9rem;
-            color: #928ed4ff;
+            color: #e75480;
             text-decoration: none;
             transition: color 0.3s;
         }
 
         .forgot-link:hover {
-            color: #c041abff;
+            color: #c23364;
         }
 
         /* Login Button */
         .login-btn {
-            background: #da33b3ff !important;
+            background: #e75480 !important;
             border: none;
             padding: 0.7rem 1.6rem;
-            border-radius: 8px;
+            border-radius: 10px;
             color: #fff;
             font-size: 0.95rem;
             font-weight: bold;
@@ -108,14 +109,58 @@
         }
 
         .login-btn:hover {
-            background: #f07affff !important;
+            background: #f07ab2 !important;
+        }
+
+        /* Divider */
+        .divider {
+            display: flex;
+            align-items: center;
+            margin: 1.5rem 0;
+        }
+
+        .divider hr {
+            flex-grow: 1;
+            border: 0;
+            border-top: 1px solid #f3b7d0;
+        }
+
+        .divider span {
+            margin: 0 0.75rem;
+            color: #e75480;
+            font-size: 0.8rem;
+        }
+
+        /* Google Button */
+        .google-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            width: 100%;
+            padding: 0.75rem;
+            background: #f3b7d0;
+            color: #fff;
+            font-weight: 600;
+            border-radius: 12px;
+            transition: 0.3s;
+            box-shadow: 0 4px 10px rgba(231, 84, 128, 0.2);
+        }
+
+        .google-btn:hover {
+            background: #e75480;
         }
     </style>
 
     <div class="login-container">
         <div class="login-box">
+            <!-- Logo -->
+            <div class="mb-4">
+                <img src="{{ asset('images/simplyjopay-logo.jpg') }}" alt="Simply Jopay Logo" class="w-16 h-16 mx-auto rounded-full shadow-md">
+            </div>
+
             <!-- Title -->
-            <h2 class="login-title">Welcome Back 👋</h2>
+            <h2 class="login-title">Welcome Back 💖</h2>
 
             <!-- Session Status -->
             <x-auth-session-status class="mb-4" :status="session('status')" />
@@ -139,10 +184,8 @@
 
                 <!-- Remember Me -->
                 <div class="remember-me">
-                    <label for="remember_me">
-                        <input id="remember_me" type="checkbox" name="remember">
-                        <span>{{ __('Remember me') }}</span>
-                    </label>
+                    <input id="remember_me" type="checkbox" name="remember">
+                    <span>{{ __('Remember me') }}</span>
                 </div>
 
                 <!-- Actions -->
@@ -159,20 +202,16 @@
                 </div>
             </form>
 
-           <!-- Divider -->
-            <div class="flex items-center my-4">
-                <hr class="flex-grow border-pink-400">
-                <span class="mx-2 text-pink-500 text-xs">OR</span>
-                <hr class="flex-grow border-pink-400">
+            <!-- Divider -->
+            <div class="divider">
+                <hr>
+                <span>OR</span>
+                <hr>
             </div>
 
             <!-- Google Login Button -->
-            <a href="{{ route('google.redirect') }}" 
-            class="w-full inline-flex items-center justify-center px-4 py-2 
-                    bg-pink-300 hover:bg-pink-400 
-                    text-white font-semibold 
-                    rounded-xl shadow-lg transition-all duration-300">
-                <svg class="w-5 h-5 mr-2" viewBox="0 0 533.5 544.3">
+            <a href="{{ route('google.redirect') }}" class="google-btn">
+                <svg class="w-5 h-5" viewBox="0 0 533.5 544.3">
                     <path fill="#4285F4" d="M533.5 278.4c0-17.4-1.6-34-4.6-50.2H272.1v95.3h147.5c-6.3 33.9-25.4 62.6-54.1 81.8l87.2 67.8c51-47 80.8-116.3 80.8-194.7z"/>
                     <path fill="#34A853" d="M272.1 544.3c73.4 0 135-24.3 179.9-66.1l-87.2-67.8c-24.2 16.3-55.2 26-92.7 26-71 0-131.3-47.9-152.9-112.1l-90.2 69.6c43.9 87.3 134 150.4 243.1 150.4z"/>
                     <path fill="#FBBC05" d="M119.2 324.2c-10.3-30-10.3-62.5 0-92.5l-90.2-69.6c-39.4 77.6-39.4 168.2 0 245.8l90.2-69.7z"/>
@@ -180,8 +219,6 @@
                 </svg>
                 Login with Google
             </a>
-
-
         </div>
     </div>
 </x-guest-layout>

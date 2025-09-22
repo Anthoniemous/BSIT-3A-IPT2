@@ -6,6 +6,7 @@ use Laravel\Socialite\Facades\Socialite;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\GoogleAuthController;
+use App\Http\Controllers\HomeController;
 
 // Redirect to Google
 Route::get('/auth/google/redirect', function () {
@@ -37,9 +38,13 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+
+
+Route::get('/home', function(){
+    return view('users.home');
+})->middleware(['auth'])->name('home');
+
+Route::get('/home', [HomeController::class, 'index'])->middleware('auth')->name('home');
 
 Route::get('auth/google/redirect', [GoogleAuthController::class,'redirect'])->name('google.redirect');
 Route::get('auth/google/callback', [GoogleAuthController::class, 'callback'])->name('google.callback');;
