@@ -72,7 +72,7 @@
                $stones = [
                    ['name'=>'Amethyst','img'=>'amethyst.jpg'],
                    ['name'=>'Emerald','img'=>'emerald.jpg'],
-                   ['name'=>'Pear','img'=>'pearl.jpg'],
+                   ['name'=>'Aquamarine','img'=>'aquamarine.jpg'],
                    ['name'=>'Ruby','img'=>'ruby.jpg'],
                    ['name'=>'Sapphire','img'=>'sapphire.jpg'],
                    ['name'=>'Topaz','img'=>'topaz.webp']
