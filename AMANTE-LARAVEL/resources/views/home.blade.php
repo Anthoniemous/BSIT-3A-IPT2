@@ -1,13 +1,7 @@
-<!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Amante Pizza</title>
-    <link href="https://fonts.bunny.net/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
-    <script src="https://cdn.tailwindcss.com"></script>
-</head>
-<body class="font-sans bg-gradient-to-b from-yellow-50 via-white to-orange-50">
+@extends('layouts.app')
+
+@section('content')
+<div class="min-h-screen bg-gradient-to-b from-yellow-50 via-white to-orange-50 font-sans">
 
     <!-- TOP NAVIGATION -->
     <header class="w-full py-6 bg-white shadow-md sticky top-0 z-50">
@@ -33,8 +27,8 @@
                         <div id="dropdownMenu" class="hidden absolute right-0 mt-2 w-44 bg-white shadow-md rounded">
                             <a href="{{ route('profile.edit') }}" class="block px-4 py-2 hover:bg-gray-100">Profile</a>
                             <a href="{{ route('logout') }}"
-                               class="block px-4 py-2 hover:bg-gray-100 rounded-b"
-                               onclick="event.preventDefault(); document.getElementById('logoutForm').submit();">Logout</a>
+                                class="block px-4 py-2 hover:bg-gray-100 rounded-b"
+                                onclick="event.preventDefault(); document.getElementById('logoutForm').submit();">Logout</a>
                             <form id="logoutForm" action="{{ route('logout') }}" method="POST" class="hidden">@csrf</form>
                         </div>
                     </div>
@@ -53,13 +47,13 @@
     <!-- HERO -->
     <section id="home" class="flex items-center justify-center text-center py-32 px-6 bg-gradient-to-r from-yellow-100 to-orange-100">
         <div class="bg-white rounded-3xl shadow-xl p-12 max-w-2xl">
-            <h1 class="text-5xl font-bold text-red-600 mb-6">Welcome to Amante Pizza 🍕</h1>
-            <p class="text-gray-700 mb-8">Delicious handcrafted pizzas made with love. Explore our menu and savor every bite.</p>
+            <h1 class="text-5xl font-bold text-red-600 mb-6">Savor Every Slice 🍕</h1>
+            <p class="text-gray-700 mb-8">Handcrafted pizzas with fresh ingredients and love in every bite. Start your delicious journey now.</p>
             <a href="#menu" class="bg-red-600 text-white font-bold px-8 py-3 rounded-full hover:bg-red-700 transition">Explore Menu</a>
         </div>
     </section>
 
-    <!-- MENU PREVIEW -->
+    <!-- MENU -->
     <section id="menu" class="py-20 px-6 bg-white">
         <h2 class="text-3xl font-bold text-red-600 text-center mb-12">Our Favorites</h2>
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
@@ -82,23 +76,21 @@
 
     <!-- ABOUT -->
     <section id="about" class="py-20 px-6 bg-orange-50 text-center">
-        <h2 class="text-3xl font-bold text-red-600 mb-6">About Us</h2>
+        <h2 class="text-3xl font-bold text-red-600 mb-6">Our Story</h2>
         <p class="text-gray-700 max-w-3xl mx-auto leading-relaxed">
-            Amante Pizza is all about crafting perfect slices with passion and the freshest ingredients. Join us in celebrating flavor and tradition in every bite.
+            At <span class="font-bold">Amante Pizza</span>, pizza is not just food — it’s a celebration of flavor, tradition, and togetherness. 
+            From our first oven to today, we bring people closer with every slice.
         </p>
     </section>
 
     <!-- CONTACT -->
     <section id="contact" class="py-20 px-6 bg-red-600 text-center text-white">
-        <h2 class="text-3xl font-bold mb-4">Get in Touch</h2>
-        <p class="mb-6">Order your favorite pizza today or visit our store!</p>
-        <a href="mailto:orders@amantepizza.com" class="bg-white text-red-600 px-8 py-3 rounded-full font-bold shadow hover:bg-gray-100 transition">Send Email 📩</a>
+        <h2 class="text-3xl font-bold mb-4">Order Today!</h2>
+        <p class="mb-6">Experience the magic of freshly baked pizza 🍕</p>
+        <a href="mailto:orders@amantepizza.com" class="bg-white text-red-600 px-8 py-3 rounded-full font-bold shadow hover:bg-gray-100 transition">
+            Send Email 📩
+        </a>
     </section>
 
-    <!-- FOOTER -->
-    <footer class="py-6 bg-white text-center text-gray-500">
-        &copy; {{ date('Y') }} Amante Pizza. All rights reserved.
-    </footer>
-
-</body>
-</html>
+</div>
+@endsection
