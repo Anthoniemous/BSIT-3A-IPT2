@@ -27,7 +27,7 @@
 
             <!-- Divider -->
             <div class="flex items-center justify-center">
-                <span class="text-gray-500 text-sm">or continue with email</span>
+                <span class="text-gray-500 text-sm">or Continue with email</span>
             </div>
 
             <!-- Form -->
