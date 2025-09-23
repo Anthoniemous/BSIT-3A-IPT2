@@ -15,13 +15,13 @@
             <div>📍 Location: Poblacion, Lupon, Davao Oriental</div>
             <div>📞 Call Free: 0910-123-4516</div>
         </div>
-        <div class="flex space-x-1 items-left">
+        <div class="flex space-x-4 items-left">
             <button class="p-2 border rounded-md hover:bg-blue-100 ">
                 🔍
             </button>
             <button class="p-2 border rounded-md hover:bg-blue-100 relative">
                 🛒
-                <span class="absolute -top-2 -left-2 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-left justify-left">3</span>
+                <span class="absolute -top-2 -left-2 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-left justify-center">3</span>
             </button>
         </div>
         <!-- User Info -->

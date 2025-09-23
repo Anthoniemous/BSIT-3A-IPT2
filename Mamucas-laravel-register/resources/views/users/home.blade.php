@@ -9,23 +9,25 @@
 </head>
 <body class="bg-white text-gray-800 font-sans">
 
-    <!-- Top bar -->
-    <div class="bg-white shadow-md py-2 px-6 flex justify-between items-center text-sm">
-        <div class="flex space-x-4">
-            <div>📍 Location: Poblacion, Lupon, Davao Oriental</div>
-            <div>📞 Call Free: 0910-123-4516</div>
-        </div>
-        <div class="flex space-x-1 items-left">
-            <button class="p-2 border rounded-md hover:bg-blue-100 ">
-                🔍
-            </button>
-            <button class="p-2 border rounded-md hover:bg-blue-100 relative">
-                🛒
-                <span class="absolute -top-2 -left-2 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-left justify-left">3</span>
-            </button>
-        </div>
-        <!-- User Info -->
-                   <div class="flex items-center space-x-3">
+                <!-- Top bar -->
+            <div class="bg-white shadow-md py-2 px-6 flex justify-between items-center text-sm">
+                <!-- Left side: location, phone, and buttons -->
+                <div class="flex space-x-4 items-center">
+                    <div>📍 Location: Poblacion, Lupon, Davao Oriental</div>
+                    <div>📞 Call Free: 0910-123-4516</div>
+                    
+                    <!-- Buttons -->
+                    <button class="p-2 border rounded-md hover:bg-blue-100">
+                        🔍
+                    </button>
+                    <button class="p-2 border rounded-md hover:bg-blue-100 relative">
+                        🛒
+                        <span class="absolute -top-2 -left-2 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">3</span>
+                    </button>
+                </div>
+
+                <!-- Right side: user info + logout -->
+                <div class="flex items-center space-x-3">
                     <span class="font-semibold">Hi, {{ Auth::user()->name }}</span>
                     <form method="POST" action="{{ route('logout') }}">
                         @csrf
@@ -34,10 +36,7 @@
                         </button>
                     </form>
                 </div>
-
-                </div>
-            </header>
-    </div>
+            </div>
 
     <!-- Logo & Navigation -->
     <header class="flex flex-col items-center py-6 bg-blue-50">

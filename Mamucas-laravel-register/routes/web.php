@@ -41,6 +41,10 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
+Route::get('/home', function(){
+    return view('users.home');
+})->middleware(['auth'])->name('home');
+
 Route::get('auth/google/redirect', [GoogleAuthController::class,'redirect'])->name('google.redirect');
 Route::get('auth/google/callback', [GoogleAuthController::class, 'callback'])->name('google.callback');;
 
