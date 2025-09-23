@@ -1,3 +1,9 @@
+
+<header class="bg-gray-800 shadow sticky top-0 z-50">
+       
+
+
+
 <nav x-data="{ open: false }" class="bg-white dark:bg-gray-800 border-b border-gray-100 dark:border-gray-700">
     <!-- Primary Navigation Menu -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -12,10 +18,69 @@
 
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-                        {{ __('Dashboard') }}
+                    <x-nav-link :href="route('dashboard')" :active="request()->routeIs('welcome')">
+                        <strong>{{ __('') }}</strong>
                     </x-nav-link>
                 </div>
+
+
+                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                    <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
+                        <strong>{{ __('SHOP') }}</strong>
+                    </x-nav-link>
+                </div>
+
+                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                    <x-nav-link :href="route('about')" :active="request()->routeIs('about')">
+                        <strong>{{ __('ABOUT') }}</strong>
+                    </x-nav-link>
+                </div>
+
+                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                    <x-nav-link :href="route('message')" :active="request()->routeIs('message')">
+                        <strong>{{ __('COLLECTIONS') }}</strong>
+                    </x-nav-link>
+                </div>
+
+                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                    <x-nav-link :href="route('services')" :active="request()->routeIs('services')">
+                        <strong>{{ __('BLOG') }}</strong>
+                    </x-nav-link>
+                </div>
+
+                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                    <x-nav-link :href="route('contact')" :active="request()->routeIs('contact')">
+                        <strong>{{ __('CONTACT') }}</strong>
+                    </x-nav-link>
+                </div>
+
+                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex items-center">
+                 <x-nav-link :href="route('dashboard')" :active="request()->routeIs('welcome')">
+                 <strong>{{ __('CART') }}</strong>
+                </x-nav-link>
+
+ <!-- Modern Search Bar -->
+<form action="{{ route('services') }}" method="GET" class="relative w-64">
+    <input type="text" name="q"
+        class="w-full pl-4 pr-10 py-2 rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-blue-600 text-sm shadow-sm"
+        placeholder="Search...">
+
+    <!-- Magnifying Glass Button -->
+    <button type="submit"
+        class="absolute right-2 top-1/2 -translate-y-1/2 bg-blue-600 text-white p-2 rounded-full hover:bg-blue-700 transition">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M21 21l-4.35-4.35M17 11a6 6 0 11-12 0 6 6 0 0112 0z" />
+        </svg>
+    </button>
+</form>
+
+
+
+
+                </div>
+
+
             </div>
 
             <!-- Settings Dropdown -->
@@ -98,3 +163,5 @@
         </div>
     </div>
 </nav>
+
+</header>
