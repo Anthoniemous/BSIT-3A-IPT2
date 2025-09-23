@@ -134,3 +134,71 @@
     </div>
 </body>
 </html>
+
+<x-app-layout>
+    <x-slot name="header">
+        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
+            {{ __('Home') }}
+        </h2>
+    </x-slot>
+
+    <div class="relative min-h-screen bg-cover bg-center" style="background-image: url('{{ asset('images/background.jpg') }}')">
+        <!-- Dark overlay -->
+        <div class="absolute inset-0 bg-black bg-opacity-50"></div>
+
+        <!-- Navigation -->
+        <nav class="relative z-10 flex justify-between items-center px-8 py-4 bg-white bg-opacity-70 shadow-md">
+            <div class="text-xl font-bold text-gray-800">
+                {{ config('app.name', 'Laravel') }}
+            </div>
+
+            <ul class="flex space-x-4 font-semibold">
+                <li>
+                    <a href="{{ url('/') }}"
+                       class="px-4 py-2 rounded-full bg-pink-200 text-gray-800 hover:bg-pink-300 shadow-md transition">
+                        Home
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ url('/about') }}"
+                       class="px-4 py-2 rounded-full bg-violet-200 text-gray-800 hover:bg-violet-300 shadow-md transition">
+                        About Us
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ url('/help') }}"
+                       class="px-4 py-2 rounded-full bg-yellow-200 text-gray-800 hover:bg-yellow-300 shadow-md transition">
+                        Help
+                    </a>
+                </li>
+            </ul>
+
+            <!-- Search + Logout -->
+            <div class="flex items-center space-x-3">
+                <form action="#" method="GET" class="flex">
+                    <input type="text" name="search" placeholder="Search..."
+                           class="px-3 py-2 rounded-l-md border border-gray-300 focus:outline-none focus:ring focus:ring-pink-300">
+                    <button type="submit"
+                            class="px-4 py-2 bg-pink-400 text-white rounded-r-md hover:bg-pink-500 transition">
+                        Go
+                    </button>
+                </form>
+
+                <!-- Logout -->
+                <form method="POST" action="{{ route('logout') }}">
+                    @csrf
+                    <button type="submit"
+                            class="px-4 py-2 rounded-full bg-red-300 text-gray-800 hover:bg-red-400 shadow-md transition">
+                        Logout
+                    </button>
+                </form>
+            </div>
+        </nav>
+
+        <!-- Main content -->
+        <div class="relative z-10 flex flex-col justify-center items-center text-center text-white py-32">
+            <h1 class="text-5xl font-bold mb-6">Welcome to {{ config('app.name', 'Laravel') }}</h1>
+            <p class="text-lg">This is your home page, just like the dashboard — but sweeter with pastel candy vibes 🍬</p>
+        </div>
+    </div>
+</x-app-layout>
