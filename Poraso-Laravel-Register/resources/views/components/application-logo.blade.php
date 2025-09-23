@@ -1,1 +1,0 @@
-<img src="{{ asset('images/logo.png') }}" alt="My Logo" style="height: 300px; margin-bottom: -70px; margin-top: -100px; drop-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);">
