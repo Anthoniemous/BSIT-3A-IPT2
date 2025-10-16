@@ -10,7 +10,7 @@
         <!-- Top Bar -->
         <div class="flex items-center justify-between">
             <input class="w-[400px] rounded-md border-gray-300 focus:ring-2 focus:ring-black" type="text" placeholder="Search Product">
-            <button id="openModalBtn" class="bg-black py-3 px-5 text-white rounded-md hover:bg-gray-800 transition">
+            <button id="openModalBtn" class="bg-blue-500 py-3 px-5 text-white rounded-md hover:bg-blue-700 transition">
                 Add Product
             </button>
         </div>
@@ -27,6 +27,9 @@
                     <p class="text-gray-500 mb-1">
                         <span class="font-medium text-gray-700">Price:</span> ${{ $product->price }}
                     </p>
+                     <p class="text-gray-500 mb-1">
+                        <span class="font-medium text-gray-700">Description:</span> {{ $product->description }}
+                    </p>
                     <p class="text-gray-500 mb-1">
                         <span class="font-medium text-gray-700">Status:</span>
                         <span class="{{ $product->status === 'Available' ? 'text-green-600' : 'text-red-600' }} font-semibold">
@@ -42,8 +45,8 @@
 
                     <div class="flex gap-4">
                        <button 
-                            onclick="openEditModal('{{ $product->id }}', '{{ $product->name }}', '{{ $product->price }}', '{{ $product->category }}', '{{ $product->quantity }}', '{{ $product->image }}')"
-                            class="w-full bg-yellow-600 text-white py-2 rounded-lg hover:bg-yellow-700 transition">
+                            onclick="openEditModal('{{ $product->id }}', '{{ $product->name }}', '{{ $product->price }}', '{{ $product->description }}', '{{ $product->category }}', '{{ $product->quantity }}', '{{ $product->image }}')"
+                            class="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-900 transition">
                             Edit
                         </button>
 
@@ -52,7 +55,7 @@
                             <form action="{{ route('products.deactivate', $product->id) }}" method="POST" class="w-full">
                                 @csrf
                                 @method('PATCH')
-                                <button type="submit" class="w-full bg-red-600 text-white py-2 rounded-lg hover:bg-red-700 transition">
+                                <button type="submit" class="deactivateBtn w-full bg-red-600 text-white py-2 rounded-lg hover:bg-red-700 transition">
                                     Deactivate
                                 </button>
                             </form>
@@ -87,6 +90,7 @@
                 <div class="mb-4">
                     <label class="block text-gray-700 font-medium mb-1">Product Image</label>
                     <input 
+                        required
                         type="file" 
                         accept="image/*" 
                         id="productImageInput"
@@ -99,30 +103,43 @@
                 </div>
 
                 <div class="mb-3">
-                    <label class="block text-gray-700 font-medium mb-1">Product Name</label>
-                    <input type="text" name="name" class="w-full border-gray-300 rounded-md focus:ring-2 focus:ring-black">
+                    <label  class="block text-gray-700 font-medium mb-1">Product Name</label>
+                    <input required type="text" name="name" class="w-full border-gray-300 rounded-md focus:ring-2 focus:ring-black">
                 </div>
 
                 <div class="mb-3">
-                    <label class="block text-gray-700 font-medium mb-1">Price ($)</label>
-                    <input type="number" name="price" class="w-full border-gray-300 rounded-md focus:ring-2 focus:ring-black">
+                    <label class="block text-gray-700 font-medium mb-1">Description</label>
+                    <input  required type="text" name="description" class="w-full border-gray-300 rounded-md focus:ring-2 focus:ring-black">
                 </div>
 
+                <div class="flex justify-between w-full gap-4">
+                    <div class="mb-3 w-[50%]">
+                        <label class="block text-gray-700 font-medium mb-1">Price ($)</label>
+                        <input  required type="number" name="price" class="w-full border-gray-300 rounded-md focus:ring-2 focus:ring-black">
+                    </div>
+
+                    <div class="mb-3 w-[50%]">
+                        <label class="block text-gray-700 font-medium mb-1">Quantity</label>
+                        <input  required type="number" name="quantity" class="w-full border-gray-300 rounded-md focus:ring-2 focus:ring-black">
+                    </div>
+
+                </div>
+
+                
+                
                 <div class="mb-3">
                     <label class="block text-gray-700 font-medium mb-1">Category</label>
-                    <input type="text" name="category" class="w-full border-gray-300 rounded-md focus:ring-2 focus:ring-black">
+                    <input  required type="text" name="category" class="w-full border-gray-300 rounded-md focus:ring-2 focus:ring-black">
                 </div>
 
-                <div class="mb-3">
-                    <label class="block text-gray-700 font-medium mb-1">Quantity</label>
-                    <input type="number" name="quantity" class="w-full border-gray-300 rounded-md focus:ring-2 focus:ring-black">
-                </div>
+                
 
                 <div class="flex justify-end gap-3 mt-5">
                     <button type="button" id="cancelModalBtn" class="bg-gray-300 text-gray-800 px-4 py-2 rounded-lg hover:bg-gray-400 transition">
                         Cancel
                     </button>
                     <button type="submit" class="bg-black text-white px-4 py-2 rounded-lg hover:bg-gray-800 transition">
+
                         Save Product
                     </button>
                 </div>
@@ -132,7 +149,7 @@
 
     <!-- Edit Product Modal -->
     <div id="editProductModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden">
-        <div class="bg-white rounded-xl p-6 w-96 relative shadow-lg">
+        <div class="bg-white rounded-2xl w-full max-w-lg p-6 shadow-lg relative">
             
             <form id="editProductForm" method="POST" enctype="multipart/form-data">
                 @csrf
@@ -161,26 +178,33 @@
                         <input type="text" name="name" id="editName" class="w-full border rounded-md px-3 py-2">
                     </div>
 
-                    <div class="mb-3">
-                        <label class="block text-gray-700 font-medium mb-1">Price</label>
-                        <input type="number" name="price" id="editPrice" class="w-full border rounded-md px-3 py-2">
+                     <div class="mb-3">
+                        <label class="block text-gray-700 font-medium mb-1">Description</label>
+                        <input type="text" name="description" id="editDescription" class="w-full border rounded-md px-3 py-2">
                     </div>
 
+                     <div class="flex justify-between w-full gap-4">
+                        <div class="mb-3 w-[50%]">
+                            <label class="block text-gray-700 font-medium mb-1">Price ($)</label>
+                             <input type="number" name="price" id="editPrice" class="w-full border rounded-md px-3 py-2">
+                        </div>
+
+                        <div class="mb-3 w-[50%]">
+                            <label class="block text-gray-700 font-medium mb-1">Quantity</label>
+                            <input type="number" name="quantity" id="editQuantity" class="w-full border rounded-md px-3 py-2">
+                        </div>
+
+                    </div>
                     <div class="mb-3">
                         <label class="block text-gray-700 font-medium mb-1">Category</label>
                         <input type="text" name="category" id="editCategory" class="w-full border rounded-md px-3 py-2">
-                    </div>
-
-                    <div class="mb-3">
-                        <label class="block text-gray-700 font-medium mb-1">Quantity</label>
-                        <input type="number" name="quantity" id="editQuantity" class="w-full border rounded-md px-3 py-2">
                     </div>
 
                     <div class="flex justify-end gap-3">
                         <button type="button" onclick="closeEditModal()" class="bg-gray-300 text-gray-800 px-4 py-2 rounded-lg hover:bg-gray-400 transition">
                             Cancel
                         </button>
-                        <button type="submit" class="bg-yellow-600 text-white px-4 py-2 rounded-lg hover:bg-yellow-700 transition">
+                        <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition">
                             Update
                         </button>
                     </div>
@@ -191,7 +215,58 @@
 
 
 
+    <!-- ✅ SweetAlert Script -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
+    <script>
+    @if (session('success'))
+        Swal.fire({
+            icon: 'success',
+            title: 'Success!',
+            text: '{{ session('success') }}',
+            timer: 2500,
+            showConfirmButton: false
+        });
+    @endif
+
+    @if (session('error'))
+        Swal.fire({
+            icon: 'error',
+            title: 'Duplicate Product',
+            text: '{{ session('error') }}',
+            showConfirmButton: true
+        });
+    @endif
+    </script>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const deactivateButtons = document.querySelectorAll('.deactivateBtn');
+
+        deactivateButtons.forEach(button => {
+            button.addEventListener('click', function (e) {
+                e.preventDefault();
+
+                const form = button.closest('form'); // get the parent form
+
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: "Do you really want to deactivate this product?",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#d33',
+                    cancelButtonColor: '#3085d6',
+                    confirmButtonText: 'Yes, deactivate',
+                    cancelButtonText: 'Cancel'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        form.submit(); 
+                    }
+                });
+            });
+        });
+    });
+    </script>
 
     <!-- 🔸 SCRIPT FOR MODAL -->
   @vite(['resources/css/app.css', 'resources/js/app.js'])

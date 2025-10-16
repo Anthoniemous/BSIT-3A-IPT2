@@ -78,7 +78,7 @@
 
                 <!-- Image / Banner -->
                 <div class="lg:w-1/2 relative">
-                <img src="{{ asset('img/logo.png') }}"
+                <img src="{{ asset('img/banner.png') }}"
                     alt="Featured products"
                     class="w-full max-w-lg mx-auto drop-shadow-xl rounded-2xl">
                 <!-- Optional decorative element -->

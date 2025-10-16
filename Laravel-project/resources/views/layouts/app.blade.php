@@ -11,6 +11,7 @@
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
 
+
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
@@ -22,7 +23,7 @@
         <!-- Sidebar -->
         <aside class="w-64 bg-gray-900 text-gray-100 flex flex-col fixed h-full">
             <div class="flex items-center justify-center h-16 border-b border-gray-700">
-                <h1 class="text-xl font-semibold text-white">ShadyShop</h1>
+                <h1 class="text-xl font-semibold text-white">Shady<span class="text-blue-500">Shop</span></h1>
             </div>
 
             <nav class="flex-1 px-4 py-6 space-y-2 ">

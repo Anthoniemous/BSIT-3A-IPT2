@@ -41,6 +41,7 @@ window.openEditModal = function (
     id,
     name,
     price,
+    description,
     category,
     quantity,
     imagePath
@@ -52,6 +53,7 @@ window.openEditModal = function (
     document.getElementById("editPrice").value = price;
     document.getElementById("editCategory").value = category;
     document.getElementById("editQuantity").value = quantity;
+    document.getElementById("editDescription").value = description;
 
     // ✅ Show existing image
     const preview = document.getElementById("editImagePreview");

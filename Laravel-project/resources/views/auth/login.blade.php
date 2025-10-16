@@ -53,6 +53,16 @@
         <x-primary-button class="w-full justify-center">
             {{ __('Log in') }}
         </x-primary-button>
+        
+        <a
+            href="{{ route('register') }}"
+            class="inline-block px-5 py-1.5  border border-gray-800 text-gray-800 hover:bg-gray-800 hover:text-white transition
+                  text-sm leading-normal w-full justify-center text-center rounded-[5px] font-bold"
+        >
+            REGISTER
+        </a>
+
+
 
         <!-- Divider -->
         <div class="relative mt-8">
