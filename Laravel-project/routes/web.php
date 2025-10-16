@@ -43,6 +43,7 @@ Route::get('/dashboard', function () {
 
 
 use App\Http\Controllers\ProductController;
+
 use App\Http\Controllers\CatergoryController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\OrdersController;
@@ -53,6 +54,12 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     Route::get('/product', [ProductController::class, 'index'])->name('products.product');
+    Route::post('/products', [ProductController::class, 'store'])->name('products.store');
+    Route::resource('products', ProductController::class);
+    Route::patch('/products/{id}/deactivate', [ProductController::class, 'deactivate'])->name('products.deactivate');
+
+
+
 
     Route::get('/category', [CatergoryController::class, 'index'])->name('categorys.category');
 

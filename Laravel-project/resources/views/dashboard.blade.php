@@ -34,7 +34,7 @@
                                     <i class="fas fa-ticket-alt text-white text-xl"></i>
                                 </div>
                                 <div class="ml-4">
-                                    <p class="text-sm font-medium text-blue-100">Total Bookings</p>
+                                    <p class="text-sm font-medium text-blue-100">Total Orders</p>
                                     <p class="text-3xl font-bold text-white">0</p>
                                 </div>
                             </div>
@@ -67,7 +67,7 @@
                                     <i class="fas fa-film text-white text-xl"></i>
                                 </div>
                                 <div class="ml-4">
-                                    <p class="text-sm font-medium text-purple-100">Total Movies</p>
+                                    <p class="text-sm font-medium text-purple-100">Daily Sales</p>
                                     <p class="text-3xl font-bold text-white">0</p>
                                 </div>
                             </div>
@@ -82,7 +82,7 @@
                                     <i class="fas fa-building text-white text-xl"></i>
                                 </div>
                                 <div class="ml-4">
-                                    <p class="text-sm font-medium text-rose-100">Total Cinemas</p>
+                                    <p class="text-sm font-medium text-rose-100">Monthly Sales</p>
                                     <p class="text-3xl font-bold text-white">0</p>
                                 </div>
                             </div>
