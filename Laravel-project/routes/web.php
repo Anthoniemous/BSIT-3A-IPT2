@@ -41,10 +41,25 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
+
+use App\Http\Controllers\ProductController;
+use App\Http\Controllers\CatergoryController;
+use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\OrdersController;
+
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+    Route::get('/product', [ProductController::class, 'index'])->name('products.product');
+
+    Route::get('/category', [CatergoryController::class, 'index'])->name('categorys.category');
+
+    Route::get('/customer', [CustomerController::class, 'index'])->name('customers.customer');
+
+    Route::get('/order', [OrdersController::class, 'index'])->name('orders.order');
+
 });
 
 require __DIR__.'/auth.php';
