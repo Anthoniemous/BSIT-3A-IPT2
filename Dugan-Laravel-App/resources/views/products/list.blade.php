@@ -32,16 +32,10 @@
               <span class="badge bg-secondary badge-stock">Out of stock</span>
             @endif
             @php
-              $imageUrl = null;
-              if ($car->image && \Illuminate\Support\Facades\Storage::disk('public')->exists($car->image)) {
-                $imageUrl = \Illuminate\Support\Facades\Storage::url($car->image);
-              }
+              $imageUrl = $car->image ?? 'https://via.placeholder.com/400x300?text=No+Image';
             @endphp
-            @if($imageUrl)
-              <img src="{{ $imageUrl }}" alt="{{ $car->brand }} {{ $car->model }}" class="product-img">
-            @else
-              <img src="https://via.placeholder.com/400x300?text=No+Image" alt="No image" class="product-img">
-            @endif
+
+            <img src="{{ $imageUrl }}" alt="{{ $car->brand }} {{ $car->model }}" class="product-img" loading="lazy">
             <div class="product-body">
               <div class="d-flex justify-content-between align-items-start">
                 <div>
