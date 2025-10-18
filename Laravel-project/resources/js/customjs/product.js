@@ -11,7 +11,12 @@ if (openModalBtn) {
 
 const closeModal = () => productModal.classList.add("hidden");
 if (closeModalBtn) closeModalBtn.addEventListener("click", closeModal);
-if (cancelModalBtn) cancelModalBtn.addEventListener("click", closeModal);
+if (cancelModalBtn) {
+    cancelModalBtn.addEventListener("click", () => {
+        clearProductForm(); // clear inputs
+        closeModal(); // hide modal
+    });
+}
 
 productModal?.addEventListener("click", (e) => {
     if (e.target === productModal) closeModal();
@@ -92,3 +97,20 @@ if (editImageInput) {
 window.closeEditModal = function () {
     document.getElementById("editProductModal").classList.add("hidden");
 };
+
+function clearProductForm() {
+    const form = document.getElementById("productForm");
+
+    // Reset all text, number, and file inputs
+    form.querySelectorAll("input").forEach((input) => {
+        input.value = "";
+    });
+
+    // Hide image preview if shown
+    const imagePreview = document.getElementById("imagePreview");
+    if (imagePreview) {
+        imagePreview.classList.add("hidden");
+        const previewImg = document.getElementById("previewImg");
+        if (previewImg) previewImg.src = "#";
+    }
+}

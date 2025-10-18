@@ -7,7 +7,6 @@
 
     <div class="py-6 px-6">
 
-        <!-- Top Bar -->
         <div class="flex items-center justify-between">
             <input class="w-[400px] rounded-md border-gray-300 focus:ring-2 focus:ring-black" type="text" placeholder="Search Product">
             <button id="openModalBtn" class="bg-blue-500 py-3 px-5 text-white rounded-md hover:bg-blue-700 transition">
@@ -17,62 +16,69 @@
 
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 mt-6">
             @foreach ($products as $product)
-                <div class="bg-white rounded-2xl shadow-md hover:shadow-lg transition p-5">
-                    <img src="{{ asset('storage/' . $product->image) }}" 
-                    alt="{{ $product->name }}" 
-                    class="w-full h-48 object-cover rounded-lg mb-4">
+                <div class="relative bg-white rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 overflow-hidden group">
+                    
+                    <!-- Product Image -->
+                    <div class="relative">
+                        <img src="{{ asset('storage/' . $product->image) }}" 
+                            alt="{{ $product->name }}" 
+                            class="w-full h-52 object-cover rounded-t-2xl group-hover:opacity-90 transition">
+                        <div class="absolute top-3 right-3">
+                            @if ($product->status === 'Active')
+                                <span class="bg-green-500 text-white text-xs px-3 py-1 rounded-full">Active</span>
+                            @else
+                                <span class="bg-red-500 text-white text-xs px-3 py-1 rounded-full">Inactive</span>
+                            @endif
+                        </div>
+                    </div>
 
-                    <h2 class="text-xl font-semibold text-gray-800 mb-2">{{ $product->name }}</h2>
+                    <!-- Product Info -->
+                    <div class="p-5 space-y-2">
+                        <h2 class="text-xl font-semibold text-gray-800 truncate">{{ $product->name }}</h2>
+                        <p class="text-gray-600 text-sm">{{ $product->description }}</p>
 
-                    <p class="text-gray-500 mb-1">
-                        <span class="font-medium text-gray-700">Price:</span> ${{ $product->price }}
-                    </p>
-                     <p class="text-gray-500 mb-1">
-                        <span class="font-medium text-gray-700">Description:</span> {{ $product->description }}
-                    </p>
-                    <p class="text-gray-500 mb-1">
-                        <span class="font-medium text-gray-700">Status:</span>
-                        <span class="{{ $product->status === 'Available' ? 'text-green-600' : 'text-red-600' }} font-semibold">
-                            {{ $product->status }}
-                        </span>
-                    </p>
-                    <p class="text-gray-500 mb-1">
-                        <span class="font-medium text-gray-700">Category:</span> {{ $product->category }}
-                    </p>
-                    <p class="text-gray-500 mb-3">
-                        <span class="font-medium text-gray-700">Quantity:</span> {{ $product->quantity }}
-                    </p>
+                        <div class="flex justify-between items-center mt-3">
+                            <span class="font-semibold text-gray-700">₱{{ $product->price }}</span>
+                            <span class="text-sm text-gray-500">{{ $product->category }}</span>
+                        </div>
 
-                    <div class="flex gap-4">
-                       <button 
+                        <p class="text-sm text-gray-500">Qty: <span class="font-medium">{{ $product->quantity }}</span></p>
+                    </div>
+
+                    <!-- Action Icons -->
+                    <div class="absolute bottom-2 right-4 flex gap-3 opacity-0 group-hover:opacity-100 transition ">
+                        
+                        <!-- Edit -->
+                        <button 
                             onclick="openEditModal('{{ $product->id }}', '{{ $product->name }}', '{{ $product->price }}', '{{ $product->description }}', '{{ $product->category }}', '{{ $product->quantity }}', '{{ $product->image }}')"
-                            class="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-900 transition">
-                            Edit
+                            class="bg-blue-600 hover:bg-blue-800 text-white p-2 rounded-full"
+                            title="Edit Product">
+                            <i class="fa-solid fa-pen"></i>
                         </button>
 
-
-                       @if ($product->status === 'Active')
-                            <form action="{{ route('products.deactivate', $product->id) }}" method="POST" class="w-full">
+                        <!-- Activate / Deactivate -->
+                        @if ($product->status === 'Active')
+                            <form action="{{ route('products.deactivate', $product->id) }}" method="POST">
                                 @csrf
                                 @method('PATCH')
-                                <button type="submit" class="deactivateBtn w-full bg-red-600 text-white py-2 rounded-lg hover:bg-red-700 transition">
-                                    Deactivate
+                                <button type="submit" class= "deactivateBtn bg-red-600 hover:bg-red-800 text-white p-2 rounded-full" title="Deactivate">
+                                    <i class="fa-solid fa-trash"></i>
                                 </button>
                             </form>
                         @else
-                            <form action="{{ route('products.activate', $product->id) }}" method="POST" class="w-full">
+                            <form action="{{ route('products.activate', $product->id) }}" method="POST">
                                 @csrf
                                 @method('PATCH')
-                                <button type="submit" class="w-full bg-green-600 text-white py-2 rounded-lg hover:bg-green-700 transition">
-                                    Activate
+                                <button type="submit" class="bg-green-600 hover:bg-green-800 text-white p-2 rounded-full" title="Activate">
+                                    <i class="fa-solid fa-check"></i>
                                 </button>
                             </form>
                         @endif
-
                     </div>
                 </div>
             @endforeach
         </div>
+
 
     </div>
 
@@ -214,7 +220,7 @@
     </div>
 
 
-
+    
     <!-- ✅ SweetAlert Script -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
@@ -227,6 +233,8 @@
             timer: 2500,
             showConfirmButton: false
         });
+
+
     @endif
 
     @if (session('error'))

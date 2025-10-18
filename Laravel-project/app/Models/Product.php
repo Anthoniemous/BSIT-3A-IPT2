@@ -15,4 +15,5 @@ class Product extends Model
         'description'
     ];
 
+    protected $table = 'product_table';
 }

@@ -62,24 +62,32 @@ class ProductController extends Controller
             'description' => 'required|string|max:255',
         ]);
 
-        $exists = Product::where('name', $validated['name'])
-                    ->where('category', $validated['category'])
-                    ->where('description', $validated['description'])
-                    ->exists();
-
-        if ($exists) {
-            return redirect()->back()->with('error', 'This product already exists!');
-        }
-
         $product = Product::findOrFail($id);
 
-        $product->name = $request->name;
-        $product->price = $request->price;
-        $product->category = $request->category;
-        $product->quantity = $request->quantity;
-        $product->description = $request->description;
+        $exists = Product::where('id', '!=', $id)
+            ->where('name', $validated['name'])
+            ->where('category', $validated['category'])
+            ->where('description', $validated['description'])
+            ->exists();
 
-        // ✅ Handle new image upload
+        if ($exists) {
+            return redirect()->back()->with('error', 'Another product with the same details already exists!');
+        }
+
+        $hasChanges = 
+            $product->name !== $validated['name'] ||
+            $product->price != $validated['price'] ||
+            $product->category !== $validated['category'] ||
+            $product->quantity != $validated['quantity'] ||
+            $product->description !== $validated['description'] ||
+            $request->hasFile('image');
+
+        if (!$hasChanges) {
+            return redirect()->back()->with('info', 'No changes were made.');
+        }
+
+        $product->fill($validated);
+
         if ($request->hasFile('image')) {
             $imagePath = $request->file('image')->store('products', 'public');
             $product->image = $imagePath;
@@ -89,6 +97,7 @@ class ProductController extends Controller
 
         return redirect()->back()->with('success', 'Product updated successfully!');
     }
+
 
     public function deactivate($id)
     {
