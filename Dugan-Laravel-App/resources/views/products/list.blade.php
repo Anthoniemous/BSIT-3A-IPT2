@@ -34,8 +34,12 @@
             @php
               $imageUrl = $car->image ?? 'https://via.placeholder.com/400x300?text=No+Image';
             @endphp
+            
+            <img src="{{ asset('storage/' . $car->image) }}" 
+     alt="{{ $car->brand }} {{ $car->model }}" 
+     class="product-img" 
+     loading="lazy">
 
-            <img src="{{ $imageUrl }}" alt="{{ $car->brand }} {{ $car->model }}" class="product-img" loading="lazy">
             <div class="product-body">
               <div class="d-flex justify-content-between align-items-start">
                 <div>

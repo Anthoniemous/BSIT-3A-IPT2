@@ -11,6 +11,9 @@
     </x-slot>
 
    <div class="container mt-5">
+
+
+    
  
     {{-- <a href="{{ route('cars.create') }}" class="btn btn-success mb-3">+ Add Car</a> --}}
     
@@ -115,13 +118,6 @@
 
 
 
-
-<!-- Bootstrap 5 CSS & JS (if not already included) -->
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-
-
-
     <table id="car-table" class="table table-bordered table-striped" >
         <thead>
             <tr>
@@ -133,11 +129,16 @@
                 <th>Fuel Type</th>
                 <th>Price</th>
                 <th>Qty</th>
-                
+                <th>Description</th>
                 <th>Action</th>
             </tr>
         </thead>
     </table>
+>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+
+
 </div>
 
 </x-app-layout>

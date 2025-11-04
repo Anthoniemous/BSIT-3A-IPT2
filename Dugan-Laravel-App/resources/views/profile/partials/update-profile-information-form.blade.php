@@ -13,7 +13,7 @@
         @csrf
     </form>
 
-    <form method="post" action="{{ route('profile.update') }}" class="mt-6 space-y-6">
+    <form method="post" action="{{ route('profile.update') }}" class="mt-6 space-y-6" enctype="multipart/form-data">
         @csrf
         @method('patch')
 
@@ -46,6 +46,70 @@
                 </div>
             @endif
         </div>
+
+        <div>
+            <x-input-label :value="__('Profile Image')" />
+            <div class="mt-2 flex items-center space-x-4">
+                @if($user->profile_image)
+                    <img src="{{ asset('storage/' . $user->profile_image) }}" alt="Current Profile Image" class="w-20 h-20 rounded-full object-cover border-2 border-gray-300">
+                @else
+                    <div class="w-20 h-20 rounded-full bg-gray-300 flex items-center justify-center text-gray-600 font-semibold text-lg border-2 border-gray-300">
+                        {{ strtoupper(substr($user->name, 0, 1)) }}
+                    </div>
+                @endif
+                <div class="flex-1">
+                    <input id="profile_image" name="profile_image" type="file" class="hidden" accept="image/*" onchange="previewImage(event)" />
+                    <div class="flex space-x-2">
+                        <label for="profile_image" class="inline-flex items-center px-4 py-2 bg-blue-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-blue-700 focus:bg-blue-700 active:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition ease-in-out duration-150 cursor-pointer">
+                            {{ $user->profile_image ? 'Change Photo' : 'Upload Photo' }}
+                        </label>
+                        @if($user->profile_image)
+                            <button type="button" onclick="removeImage()" class="inline-flex items-center px-4 py-2 bg-red-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-red-700 focus:bg-red-700 active:bg-red-900 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 transition ease-in-out duration-150">
+                                Remove
+                            </button>
+                        @endif
+                    </div>
+                    <p class="mt-1 text-sm text-gray-500">Upload a square image. It will be automatically cropped to 200x200 pixels.</p>
+                    <x-input-error class="mt-2" :messages="$errors->get('profile_image')" />
+                </div>
+            </div>
+            <div id="image-preview" class="mt-2 hidden">
+                <p class="text-sm text-gray-600 mb-2">New Image Preview:</p>
+                <img id="preview-img" src="" alt="Preview" class="w-20 h-20 rounded-full object-cover border-2 border-blue-300">
+            </div>
+        </div>
+
+        <script>
+            function previewImage(event) {
+                const file = event.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        document.getElementById('preview-img').src = e.target.result;
+                        document.getElementById('image-preview').classList.remove('hidden');
+                    };
+                    reader.readAsDataURL(file);
+                }
+            }
+
+            function removeImage() {
+                if (confirm('Are you sure you want to remove your profile image?')) {
+                    // Create a hidden input to indicate removal
+                    const form = document.querySelector('form[action*="profile.update"]');
+                    const removeInput = document.createElement('input');
+                    removeInput.type = 'hidden';
+                    removeInput.name = 'remove_profile_image';
+                    removeInput.value = '1';
+                    form.appendChild(removeInput);
+
+                    // Clear file input
+                    document.getElementById('profile_image').value = '';
+
+                    // Submit the form
+                    form.submit();
+                }
+            }
+        </script>
 
         <div class="flex items-center gap-4">
             <x-primary-button>{{ __('Save') }}</x-primary-button>

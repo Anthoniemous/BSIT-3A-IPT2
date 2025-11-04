@@ -11,9 +11,10 @@
                 </div>
 
                 <!-- Navigation Links -->
+                @if(Auth::check() && Auth::user()->role === 'admin')
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-                        {{ __('Dashboard') }}
+                    <x-nav-link :href="route('admin')" :active="request()->routeIs('admin')">
+                        {{ __('Admin') }}
                     </x-nav-link>
                 </div>
                   <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
@@ -21,6 +22,7 @@
                         {{ __('Products') }}
                     </x-nav-link>
                 </div>
+                @endif
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                     <x-nav-link :href="route('products.shop')" :active="request()->routeIs('products.shop')">
                         {{ __('Shop') }}
@@ -33,6 +35,13 @@
                 <x-dropdown align="right" width="48">
                     <x-slot name="trigger">
                         <button class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150">
+                            @if(Auth::user()->profile_image)
+                                <img src="{{ asset('storage/' . Auth::user()->profile_image) }}" alt="Profile Image" class="w-8 h-8 rounded-full mr-2">
+                            @else
+                                <div class="w-8 h-8 rounded-full bg-gray-300 mr-2 flex items-center justify-center">
+                                    <span class="text-gray-600 text-sm">{{ substr(Auth::user()->name, 0, 1) }}</span>
+                                </div>
+                            @endif
                             <div>{{ Auth::user()->name }}</div>
 
                             <div class="ms-1">
@@ -77,19 +86,30 @@
     <!-- Responsive Navigation Menu -->
     <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
         <div class="pt-2 pb-3 space-y-1">
-            <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-                {{ __('Dashboard') }}
+            @if(Auth::check() && Auth::user()->role === 'admin')
+            <x-responsive-nav-link :href="route('admin')" :active="request()->routeIs('admin')">
+                {{ __('Admin') }}
             </x-responsive-nav-link>
             <x-responsive-nav-link :href="route('products')" :active="request()->routeIs('products')">{{ __('Products') }}</x-responsive-nav-link>
+            @endif
             <x-responsive-nav-link :href="route('products.shop')" :active="request()->routeIs('products.shop')">{{ __('Shop') }}</x-responsive-nav-link>
         </div>
         
 
         <!-- Responsive Settings Options -->
         <div class="pt-4 pb-1 border-t border-gray-200">
-            <div class="px-4">
-                <div class="font-medium text-base text-gray-800">{{ Auth::user()->name }}</div>
-                <div class="font-medium text-sm text-gray-500">{{ Auth::user()->email }}</div>
+            <div class="px-4 flex items-center">
+                @if(Auth::user()->profile_image)
+                    <img src="{{ asset('storage/' . Auth::user()->profile_image) }}" alt="Profile Image" class="w-10 h-10 rounded-full mr-3">
+                @else
+                    <div class="w-10 h-10 rounded-full bg-gray-300 mr-3 flex items-center justify-center">
+                        <span class="text-gray-600 text-sm">{{ substr(Auth::user()->name, 0, 1) }}</span>
+                    </div>
+                @endif
+                <div>
+                    <div class="font-medium text-base text-gray-800">{{ Auth::user()->name }}</div>
+                    <div class="font-medium text-sm text-gray-500">{{ Auth::user()->email }}</div>
+                </div>
             </div>
 
             <div class="mt-3 space-y-1">

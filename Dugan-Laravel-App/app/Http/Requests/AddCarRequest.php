@@ -30,7 +30,7 @@ class AddCarRequest extends FormRequest
         'price' => ['required', 'numeric', 'min:0'],
         'quantity' => ['nullable', 'integer', 'min:1'],
         'description' => ['nullable', 'string'],
-        'image' => ['nullable', 'image', 'max:2048'], // ✅ This makes image optional and must be an image file
+        'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048' 
         ];
     }
 }

@@ -3,21 +3,24 @@
 (function ($) {
   'use strict';
 
-  function baseUrl() { return window.location.origin; }
+  function baseUrl() { return `${location.protocol}//${location.host}`; }
   function csrf() { return $('meta[name="csrf-token"]').attr('content') || $('input[name="_token"]').val(); }
 
   let editingId = null;
+
+
+  
 
   // Initialize DataTable (jQuery DataTables expected)
   const table = $('#car-table').DataTable({
     processing: true,
     serverSide: true,
-    ajax: baseUrl() + '/products/index',
+    ajax: `${baseUrl()}/products/list`,
     columns: [
       { data: 'car_id', name: 'car_id' },
       { data: 'brand', name: 'brand' },
       { data: 'model', name: 'model' },
-      { data: 'year', name: 'year' },
+      { data: 'year', name: 'year' }, 
       { data: 'transmission', name: 'transmission' },
       { data: 'fuel_type', name: 'fuel_type' },
       { data: 'price', name: 'price' },

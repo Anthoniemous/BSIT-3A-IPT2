@@ -4,47 +4,80 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\GoogleLoginController;
 use App\Http\Controllers\AdminDashboardController;
 use App\Http\Controllers\UserDashboardController;
-use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ProductController;
+use Illuminate\Support\Facades\Route;
+use App\Http\Middleware\AdminMiddleware;
 
+// ===========================
+// Public Routes
+// ===========================
 Route::get('/', function () {
     return view('welcome');
-});
-
-// User dashboard, accessible to authenticated & verified users
-Route::middleware(['auth', 'verified'])->group(function () {
-    Route::get('/dashboard', [UserDashboardController::class, 'index'])->name('dashboard');
-
-    // Profile routes
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-});
-
-// Admin dashboard, accessible only to authenticated admins
-Route::middleware(['auth', 'admin'])->group(function () {
-    Route::get('/admin/dashboard', [AdminDashboardController::class, 'index'])->name('admin.dashboard');
 });
 
 // Google Login routes
 Route::get('/login/google', [GoogleLoginController::class, 'redirectToGoogle'])->name('auth.google');
 Route::get('/login/google/callback', [GoogleLoginController::class, 'handleGoogleCallback']);
 
-Route::controller(ProductController::class) -> group(function(){
-    Route::get("/products", "index") -> name("products");
-    Route::get("/products/index","list");
-    Route::post("/products/add","add");
-    Route::put("/products/update/{id}","update");
-        // Public shop-style product listing (grid)
-        Route::get('/products/shop', 'shop')->name('products.shop');
+// ===========================
+// Authenticated User Routes (Buyers / Normal Users)
+// ===========================
+Route::middleware(['auth', 'verified'])->group(function () {
+    // User profile
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+    // User dashboard
+    Route::get('/dashboard', [UserDashboardController::class, 'index'])->name('dashboard');
+
     
 });
 
-// Return a single product as JSON for editing via AJAX
-Route::get('/products/{id}', [ProductController::class, 'show'])->name('products.show');
 
-// Delete (AJAX)
-Route::delete('/products/{id}', [ProductController::class, 'delete'])->name('cars.delete');
 
+
+// ===========================
+// Admin Routes (Protected by 'admin' middleware)
+// ===========================
+// Route::middleware(['auth', 'admin'])->group(function () {
+    
+    
+// });
+
+
+// Admin dashboards
+    Route::get('/admin', [AdminController::class, 'index'])->name('admin');
+    Route::get('/admin/dashboard', [AdminDashboardController::class, 'index'])->name('admin.dashboard');
+
+
+
+// Admin product management
+    Route::controller(ProductController::class)->group(function () {
+        Route::get('/products', 'index')->name('products');
+        Route::get('/products/list', 'list');
+         Route::get('/products/shop','shop')->name('products.shop');
+        Route::post('/products/add', 'add');
+         // View single product details
+        Route::get('/products/{id}', 'show')->name('products.show');
+          Route::put('/products/update/{id}', 'edit') ->name('cars.update');
+        Route::delete('/products/{id}', 'delete')->name('cars.delete');
+        // Public shop route (for buyers)
+       
+        });
+      
+
+   
+
+// ===========================
+// Redirect Users After Login (optional)
+// ===========================
+Route::get('/redirect', function () {
+    if (auth()->check() && auth()->user()->role === 'admin') {
+        return redirect('/admin/dashboard');
+    }
+    return redirect('/dashboard');
+});
 
 require __DIR__.'/auth.php';

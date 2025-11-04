@@ -15,7 +15,10 @@ class ProductController extends Controller
     public function index(){
         return view("products.productview");
     }
-    public  function list(){
+
+
+
+    public function list(){
         $query = Car::query();
   
         return DataTables::of($query) -> make(true);
@@ -34,21 +37,27 @@ class ProductController extends Controller
          $validated = $request->validated();
 
     // Handle image upload if present
+    $imagePath = null;
     if ($request->hasFile('image')) {
         $imagePath = $request->file('image')->store('cars', 'public');
         $validated['image'] = $imagePath;
     }
 
     // Create the car record
-    Car::create($validated);
+    $car = Car::create($validated);
 
+    // Assign image path directly if uploaded
+    if ($imagePath) {
+        $car->image = $imagePath;
+        $car->save();
+    }
 
     return response() -> json(["message" => "User Added"],200);
 
 
     }
 
-    public function update(Request $request, $id)
+    public function edit(Request $request, $id)
 {
     $car = Car::findOrFail($id); // Find the car or return 404
 
@@ -65,12 +74,19 @@ class ProductController extends Controller
     ]);
 
     // Handle image upload (optional)
+    $imagePath = null;
     if ($request->hasFile('image')) {
         $imagePath = $request->file('image')->store('cars', 'public');
         $validated['image'] = $imagePath;
     }
 
     $car->update($validated); // Update with validated data
+
+    // Assign image path directly if uploaded
+    if ($imagePath) {
+        $car->image = $imagePath;
+        $car->save();
+    }
 
     // Return JSON so frontend AJAX can consume the response
     return response()->json(['message' => 'Car updated successfully', 'car' => $car], 200);

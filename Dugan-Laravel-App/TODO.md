@@ -1,0 +1,9 @@
+- [x] Modify the `add` method in ProductController.php to assign image path directly using `$car->image = $imagePath;` after creating the Car instance.
+- [x] Modify the `update` method in ProductController.php to assign image path directly using `$car->image = $imagePath;` after finding the Car instance.
+- [x] Add profile_image column to users table via migration.
+- [x] Update User model to include profile_image in fillable.
+- [x] Update ProfileUpdateRequest to validate profile_image.
+- [x] Update ProfileController to handle image upload and storage.
+- [x] Update profile edit form to include file input for profile image.
+- [x] Update navigation to display profile image.
+- [x] Ensure storage link is created for public access to images.
