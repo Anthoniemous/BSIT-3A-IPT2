@@ -9,6 +9,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rules;
 use Illuminate\View\View;
 
@@ -29,22 +30,40 @@ class RegisteredUserController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
+        // Check if email already exists before validation
+        $existingUser = User::where('email', strtolower($request->email))->first();
+        if ($existingUser) {
+            return redirect()->back()
+                ->withInput()
+                ->withErrors(['email' => 'This email address is already registered. Please use a different email or try logging in.']);
+        }
+
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            'image' => ['nullable', 'image', 'mimes:jpeg,png,jpg,gif', 'max:2048'],
         ]);
+
+        $imagePath = null;
+        if ($request->hasFile('image')) {
+            $imagePath = $request->file('image')->store('profile_photos', 'public');
+        }
 
         $user = User::create([
             'name' => $request->name,
-            'email' => $request->email,
+            'email' => strtolower($request->email),
             'password' => Hash::make($request->password),
+            'image' => $imagePath,
+            'role' => 'user', // Default role for registered users
         ]);
 
         event(new Registered($user));
 
+        // Log the user in so they can access the verification notice page
         Auth::login($user);
 
-        return redirect(route('dashboard', absolute: false));
+        // Redirect to email verification notice
+        return redirect()->route('verification.notice')->with('success', 'Registration successful! Please verify your email address.');
     }
 }

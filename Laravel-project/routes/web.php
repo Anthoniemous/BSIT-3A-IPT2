@@ -11,28 +11,57 @@ Route::get('/auth/redirect', function () {
 })->name('google-auth');
 
 use App\Models\User;
+use App\Models\Product;
 use Illuminate\Support\Facades\Auth;
  
 Route::get('/auth/callback', function () {
     $googleUser = Socialite::driver('google')->user();
 
-    $user = User::updateOrCreate([
-        'google_id' => $googleUser->id,
-    ], [
-        'name' => $googleUser->name,
-        'email' => $googleUser->email,
-        'google_token' => $googleUser->token,
-        'google_refresh_token' => $googleUser->refreshToken,
-    ]);
+    // Check if email already exists
+    $existingUser = User::where('email', strtolower($googleUser->email))->first();
+    
+    if ($existingUser) {
+        // If user exists with this email but no google_id, update with google_id
+        if (!$existingUser->google_id) {
+            $existingUser->update([
+                'google_id' => $googleUser->id,
+                'google_token' => $googleUser->token,
+                'google_refresh_token' => $googleUser->refreshToken,
+            ]);
+            Auth::login($existingUser);
+        } else {
+            // User exists with google_id, just login
+            Auth::login($existingUser);
+        }
+        
+        $user = $existingUser;
+    } else {
+        // Create new user
+        $user = User::create([
+            'name' => $googleUser->name,
+            'email' => strtolower($googleUser->email),
+            'google_id' => $googleUser->id,
+            'google_token' => $googleUser->token,
+            'google_refresh_token' => $googleUser->refreshToken,
+            'role' => 'user',
+            'email_verified_at' => now(), // Google emails are already verified
+        ]);
+        
+        Auth::login($user);
+    }
 
-    Auth::login($user);
-
-    return redirect('/dashboard');
+    // Redirect based on role
+    if ($user->role === 'admin') {
+        return redirect('/admin/dashboard');
+    } else {
+        return redirect('/user/dashboard');
+    }
 });
 
 
 Route::get('/', function () {
-    return view('welcome');
+    $products = Product::where('status', 'Active')->latest()->take(12)->get();
+    return view('welcome', compact('products'));
 });
 
 
@@ -48,7 +77,21 @@ use App\Http\Controllers\CatergoryController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\OrdersController;
 
+
+
+
 Route::middleware('auth')->group(function () {
+    // Admin routes
+    Route::middleware('admin')->group(function () {
+        Route::get('/admin/dashboard', [App\Http\Controllers\AdminController::class, 'dashboard'])->name('admin.dashboard');
+    });
+
+    // User routes - require email verification
+    Route::middleware('verified')->group(function () {
+        Route::get('/user/dashboard', [App\Http\Controllers\UserController::class, 'dashboard'])->name('user.dashboard');
+        Route::get('/user/products', [App\Http\Controllers\UserController::class, 'products'])->name('user.products');
+    });
+
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
@@ -58,14 +101,16 @@ Route::middleware('auth')->group(function () {
     Route::resource('products', ProductController::class);
     Route::patch('/products/{id}/deactivate', [ProductController::class, 'deactivate'])->name('products.deactivate');
 
-
-
-
     Route::get('/category', [CatergoryController::class, 'index'])->name('categorys.category');
 
     Route::get('/customer', [CustomerController::class, 'index'])->name('customers.customer');
 
     Route::get('/order', [OrdersController::class, 'index'])->name('orders.order');
+
+
+  
+Route::post('/profile/upload-photo', [ProfileController::class, 'uploadPhoto'])->name('profile.uploadPhoto');
+
 
 });
 

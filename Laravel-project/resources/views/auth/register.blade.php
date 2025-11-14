@@ -1,6 +1,32 @@
 <x-guest-layout>
-    <form method="POST" action="{{ route('register') }}">
+    <form method="POST" action="{{ route('register') }}" enctype="multipart/form-data">
         @csrf
+
+        <!-- Profile Image -->
+        <div class="mb-4">
+            <x-input-label for="image" :value="__('Profile Image')" />
+            <div class="mt-2 flex items-center space-x-4">
+                <div id="imagePreview" class="w-20 h-20 rounded-full bg-gray-200 flex items-center justify-center overflow-hidden">
+                    <i class="fa-solid fa-user text-gray-400 text-2xl"></i>
+                </div>
+                <div class="flex-1">
+                    <input 
+                        type="file" 
+                        id="image" 
+                        name="image" 
+                        accept="image/*"
+                        class="block w-full text-sm text-gray-500
+                               file:mr-4 file:py-2 file:px-4
+                               file:rounded-full file:border-0
+                               file:text-sm file:font-semibold
+                               file:bg-blue-50 file:text-blue-700
+                               hover:file:bg-blue-100"
+                        onchange="previewImage(this)">
+                    <p class="mt-1 text-xs text-gray-500">PNG, JPG, GIF up to 2MB</p>
+                </div>
+            </div>
+            <x-input-error :messages="$errors->get('image')" class="mt-2" />
+        </div>
 
         <!-- Name -->
         <div>
@@ -49,4 +75,21 @@
             </x-primary-button>
         </div>
     </form>
+
+    <script>
+        function previewImage(input) {
+            const preview = document.getElementById('imagePreview');
+            const file = input.files[0];
+            
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    preview.innerHTML = `<img src="${e.target.result}" alt="Preview" class="w-full h-full object-cover rounded-full">`;
+                };
+                reader.readAsDataURL(file);
+            } else {
+                preview.innerHTML = '<i class="fa-solid fa-user text-gray-400 text-2xl"></i>';
+            }
+        }
+    </script>
 </x-guest-layout>
