@@ -7,7 +7,10 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\AdminDashboardController;
+use App\Http\Controllers\DashboardController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\OrderController;
+
 
 
 
@@ -156,7 +159,9 @@ Route::delete('/admin/deleteproduct/{id}', [ProductController::class, 'destroy']
 
 
 Route::get('/', function () {
-    return view('welcome'); // this will load resources/views/welcome.blade.php
+    $categories = \App\Models\Category::all();
+    $products = \App\Models\Product::all();
+    return view('welcome', compact('categories', 'products'));
 });
 
 
@@ -173,9 +178,7 @@ Route::middleware(['auth'])->group(function () {
 
 
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/dashboard', [DashboardController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
 
 
 // Extra Route
@@ -211,3 +214,42 @@ Route::get('auth/google/call-back', [GoogleAuthController::class, 'callbackGoogl
 
 
 require __DIR__.'/auth.php';
+
+Route::middleware(['auth:admin'])->name('admin.')->prefix('admin')->group(function () {
+    // register products resource (creates admin.products.index, create, store, edit, update, destroy, show)
+    Route::resource('products', ProductController::class);
+
+    // client-side pages
+    Route::get('wishlist', fn() => view('wishlist'))->name('wishlist');
+    Route::get('cart', fn() => view('cart'))->name('cart');
+
+    // ensure controller index is reachable as admin.manage.products
+    Route::get('products', [ProductController::class, 'index'])->name('manage.products');
+
+    // optional: register full resource as well
+    // Route::resource('products', ProductController::class);
+});
+
+
+Route::middleware('auth')->group(function () {
+    Route::get('/cart', function () {
+        return view('user.cart');
+    })->name('user.cart');
+    Route::get('/wishlist', function () {
+        return view('wishlist');
+    })->name('user.wishlist');
+    Route::get('/checkout', fn() => view('user.checkout'))->name('user.checkout');
+
+    // Add these new routes for order handling
+    Route::post('/order/store', [OrderController::class, 'store'])->name('user.order.store');
+    Route::get('/order/confirmation', [OrderController::class, 'confirmation'])->name('user.order.confirmation');
+});
+
+Route::middleware(['auth:admin'])->group(function () {
+    // Admin routes...
+
+    // New routes for admin orders
+    Route::get('/admin/orders', [AdminController::class, 'orders'])->name('admin.orders');
+    Route::get('/admin/orders/{id}', [AdminController::class, 'orderDetails'])->name('admin.order.details');
+    Route::post('/admin/orders/{id}/update-status', [AdminController::class, 'updateOrderStatus'])->name('admin.order.updateStatus');
+});

@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Hash;
 use App\Models\Admin;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use App\Models\Order;  // Add this at the top if not already present
 
 class AdminController extends Controller
 {
@@ -157,5 +158,31 @@ class AdminController extends Controller
         Auth::guard('admin')->logout();
 
         return redirect('/')->with('success', 'Admin account deleted successfully.');
+    }
+
+    public function orders()
+    {
+        $orders = Order::with('user')->latest()->paginate(10);  // Paginate for large lists
+        $totalOrders = Order::count();  // Total count for display
+        return view('admin.orders', compact('orders', 'totalOrders'));
+    }
+
+    public function orderDetails($id)
+    {
+        $order = Order::with('items.product', 'user')->findOrFail($id);
+        return view('admin.order_details', compact('order'));
+    }
+
+    public function updateOrderStatus(Request $request, $id)
+    {
+        $order = Order::findOrFail($id);
+
+        $request->validate([
+            'status' => 'required|string|in:pending,completed,cancelled',  // Adjust statuses as needed
+        ]);
+
+        $order->update(['status' => $request->status]);
+
+        return redirect()->back()->with('success', 'Order status updated successfully.');
     }
 }

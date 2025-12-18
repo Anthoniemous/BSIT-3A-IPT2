@@ -33,6 +33,26 @@
             <a href="#products" class="text-orange-100 hover:text-white transition">Shop</a>
             <a href="#contact" class="text-orange-100 hover:text-white transition">Contact</a>
 
+            <!-- ...existing navbar code... -->
+<nav class="flex items-center gap-4">
+  <a href="{{ route('user.cart') }}" class="relative text-orange-600 hover:text-orange-700">
+    🛒 Cart
+    <span id="cartCount" class="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">0</span>
+  </a>
+  <a href="{{ route('user.wishlist') }}" class="text-pink-600 hover:text-pink-700">💖 Wishlist</a>
+</nav>
+
+<script>
+  function updateCartCount() {
+    try {
+      const cart = JSON.parse(localStorage.getItem('cart') || '[]');
+      document.getElementById('cartCount').textContent = cart.length;
+    } catch (e) {}
+  }
+  updateCartCount();
+  window.addEventListener('storage', updateCartCount);
+</script>
+
             {{-- ✅ Authenticated User Dropdown (Unchanged as requested) --}}
             <div class="hidden sm:flex sm:items-center sm:ms-6">
     <x-dropdown align="right" width="48">

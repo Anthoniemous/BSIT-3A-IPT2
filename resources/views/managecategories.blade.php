@@ -33,6 +33,10 @@
           class="flex items-center gap-3 py-3 px-5 rounded-lg {{ request()->routeIs('manageproducts') ? 'bg-amber-800' : 'bg-amber-950/60' }} hover:bg-amber-800 transition duration-300 font-medium shadow-md">
           <span class="text-lg">📦</span> Manage Products
         </a>
+        <a href="{{ route('admin.orders') }}"
+          class="flex items-center gap-3 py-3 px-5 rounded-lg {{ request()->routeIs('admin.orders') ? 'bg-amber-800' : 'bg-amber-950/60' }} hover:bg-amber-800 transition duration-300 font-medium shadow-md">
+          <span class="text-lg">📋</span> Manage Orders
+        </a>
       </nav>
     
     </div>

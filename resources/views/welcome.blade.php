@@ -83,18 +83,13 @@
         </div>
 
         <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
-            <a href="#" class="bg-white p-6 rounded-2xl shadow hover:shadow-lg transition text-center">
-                🦴 <p class="mt-2 font-semibold text-orange-700">Treats</p>
-            </a>
-            <a href="#" class="bg-white p-6 rounded-2xl shadow hover:shadow-lg transition text-center">
-                🎾 <p class="mt-2 font-semibold text-orange-700">Toys</p>
-            </a>
-            <a href="#" class="bg-white p-6 rounded-2xl shadow hover:shadow-lg transition text-center">
-                🐕‍🦺 <p class="mt-2 font-semibold text-orange-700">Accessories</p>
-            </a>
-            <a href="#" class="bg-white p-6 rounded-2xl shadow hover:shadow-lg transition text-center">
-                🛏 <p class="mt-2 font-semibold text-orange-700">Beds & Houses</p>
-            </a>
+            @forelse ($categories as $category)
+                <a href="#" class="bg-white p-6 rounded-2xl shadow hover:shadow-lg transition text-center">
+                    🐾 <p class="mt-2 font-semibold text-orange-700">{{ $category->name }}</p>
+                </a>
+            @empty
+                <p class="col-span-full text-center text-gray-500">No categories available.</p>
+            @endforelse
         </div>
     </section>
 
@@ -106,24 +101,23 @@
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div class="bg-white p-6 rounded-2xl shadow hover:shadow-lg transition text-center">
-                <img src="https://cdn-icons-png.flaticon.com/512/616/616430.png" alt="Product" class="w-28 mx-auto">
-                <h4 class="mt-4 font-semibold text-orange-800">Chew Toy</h4>
-                <p class="text-gray-600">$12.99</p>
-                <button class="mt-3 bg-orange-500 text-white px-4 py-2 rounded-full hover:bg-orange-600">Add to Cart</button>
-            </div>
-            <div class="bg-white p-6 rounded-2xl shadow hover:shadow-lg transition text-center">
-                <img src="https://cdn-icons-png.flaticon.com/512/616/616408.png" alt="Product" class="w-28 mx-auto">
-                <h4 class="mt-4 font-semibold text-orange-800">Cat Collar</h4>
-                <p class="text-gray-600">$8.99</p>
-                <button class="mt-3 bg-orange-500 text-white px-4 py-2 rounded-full hover:bg-orange-600">Add to Cart</button>
-            </div>
-            <div class="bg-white p-6 rounded-2xl shadow hover:shadow-lg transition text-center">
-                <img src="https://cdn-icons-png.flaticon.com/512/616/616408.png" alt="Product" class="w-28 mx-auto">
-                <h4 class="mt-4 font-semibold text-orange-800">Dog Bed</h4>
-                <p class="text-gray-600">$29.99</p>
-                <button class="mt-3 bg-orange-500 text-white px-4 py-2 rounded-full hover:bg-orange-600">Add to Cart</button>
-            </div>
+            @forelse ($products as $product)
+                <div class="bg-white p-6 rounded-2xl shadow hover:shadow-lg transition text-center">
+                    @if ($product->image)
+                        <img src="{{ asset('uploads/products/' . $product->image) }}" alt="{{ $product->name }}" class="w-28 h-28 object-cover mx-auto rounded">
+                    @else
+                        <div class="w-28 h-28 mx-auto bg-gray-200 rounded flex items-center justify-center">No Image</div>
+                    @endif
+
+                    <h4 class="mt-4 font-semibold text-orange-800">{{ $product->name }}</h4>
+                    <p class="text-sm text-gray-600">{{ $product->category->name ?? 'Uncategorized' }}</p>
+                    <p class="text-orange-600 font-bold mt-2">₱{{ number_format($product->price, 2) }}</p>
+
+                    <button class="mt-3 bg-orange-500 text-white px-4 py-2 rounded-full hover:bg-orange-600">Add to Cart</button>
+                </div>
+            @empty
+                <p class="col-span-full text-center text-gray-500">No products available.</p>
+            @endforelse
         </div>
     </section>
 
